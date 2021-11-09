@@ -11,13 +11,13 @@ const users = [{
     email: 'adm@gmail.com'
 }]
 
-function findUser(username) {
-    return username.find(item => item.username === username);
+function findUser(username){
+    return users.find(item => item.username === username);
 
 }
 
 function findUserById(id) {
-    return username.find(item => item._id === id);
+    return users.find(item => item._id === id);
 
 }
 

@@ -9,6 +9,11 @@ const session = require('express-session');
 
 require('./auth')(passport);
 
+function authenticationMiddleware(req, res, next) {
+  if(req.isAuthenticated()) return next();
+    res.redirect('/login');
+}
+
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -38,10 +43,9 @@ app.use(passport.session());
 
 //fim
 
-
 app.use('/login', loginRouter);
-app.use('/index', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', authenticationMiddleware ,usersRouter);
+app.use('/', authenticationMiddleware, indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
